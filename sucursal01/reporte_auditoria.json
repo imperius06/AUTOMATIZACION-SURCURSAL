@@ -1,0 +1,262 @@
+{
+  "resumen": {
+    "total": 48,
+    "cumplidos": 6,
+    "fallidos": 42,
+    "porcentaje": "12.5%"
+  },
+  "resultados": [
+    {
+      "elemento": "VLAN 10",
+      "cumple": true,
+      "esperado": "USUARIOS_VLAN10",
+      "encontrado": "USUARIOS_VLAN10",
+      "nota": "VLAN existe"
+    },
+    {
+      "elemento": "VLAN 20",
+      "cumple": true,
+      "esperado": "USUARIOS_VLAN20",
+      "encontrado": "USUARIOS_VLAN20",
+      "nota": "VLAN existe"
+    },
+    {
+      "elemento": "VLAN 99",
+      "cumple": true,
+      "esperado": "GESTION",
+      "encontrado": "GESTION",
+      "nota": "VLAN existe"
+    },
+    {
+      "elemento": "VLAN 10",
+      "cumple": true,
+      "esperado": "USUARIOS_VLAN10",
+      "encontrado": "USUARIOS_VLAN10",
+      "nota": "VLAN existe"
+    },
+    {
+      "elemento": "VLAN 20",
+      "cumple": true,
+      "esperado": "USUARIOS_VLAN20",
+      "encontrado": "USUARIOS_VLAN20",
+      "nota": "VLAN existe"
+    },
+    {
+      "elemento": "VLAN 99",
+      "cumple": true,
+      "esperado": "GESTION",
+      "encontrado": "GESTION",
+      "nota": "VLAN existe"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/0 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/0 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/2 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/2 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/0 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/0 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/0 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/0 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/2 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/2 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/0 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/0 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/0 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/0 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/2 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/2 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/0 native",
+      "cumple": false,
+      "nota": "Esperado 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/0 allowed",
+      "cumple": false,
+      "nota": "Faltan: {10, 99, 20}"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/2",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/0",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/3",
+      "cumple": false,
+      "nota": "Esperado VLAN 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/2",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/3",
+      "cumple": false,
+      "nota": "Esperado VLAN 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/2",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/0",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/3",
+      "cumple": false,
+      "nota": "Esperado VLAN 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/2",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/3",
+      "cumple": false,
+      "nota": "Esperado VLAN 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/2",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/0",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi1/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-CORE:Gi0/3",
+      "cumple": false,
+      "nota": "Esperado VLAN 99, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/1",
+      "cumple": false,
+      "nota": "Esperado VLAN 10, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/2",
+      "cumple": false,
+      "nota": "Esperado VLAN 20, encontrado None"
+    },
+    {
+      "elemento": "SW-SUC-01-ACC1:Gi0/3",
+      "cumple": false,
+      "nota": "Esperado VLAN 99, encontrado None"
+    }
+  ]
+}

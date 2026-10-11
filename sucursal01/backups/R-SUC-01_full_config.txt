@@ -1,0 +1,29 @@
+! R-SUC-01 - Running Configuration
+version 15.9
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service compressed-config
+!
+hostname R-SUC-01
+!
+interface GigabitEthernet0/0
+ description Enlace troncal hacia SW-SUC-01-CORE
+ no shutdown
+!
+interface GigabitEthernet0/0.10
+ description Subinterface VLAN 10 - USUARIOS
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+!
+interface GigabitEthernet0/0.20
+ description Subinterface VLAN 20 - USUARIOS
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+!
+interface GigabitEthernet0/0.99
+ description Subinterface VLAN 99 - GESTION
+ encapsulation dot1Q 99 native
+ ip address 192.168.99.1 255.255.255.0
+!
+end

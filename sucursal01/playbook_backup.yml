@@ -1,0 +1,55 @@
+---
+# Playbook para obtener respaldos de configuración
+- name: Obtener respaldos de configuración - Sucursal 01
+  hosts: todos
+  gather_facts: no
+  vars:
+    backup_dir: "./backups"
+    backup_timestamp: "{{ ansible_date_time.iso8601_basic_short | default('backup') }}"
+
+  tasks:
+    - name: Crear directorio de backups local
+      ansible.builtin.file:
+        path: "{{ backup_dir }}"
+        state: directory
+      delegate_to: localhost
+
+    - name: Obtener configuración running (IOS)
+      cisco.ios.ios_config:
+        backup: yes
+        backup_options:
+          filename: "{{ inventory_hostname }}_running.cfg"
+          dir_path: "{{ backup_dir }}"
+      when: ansible_network_os is defined
+
+    - name: Obtener show vlan brief
+      cisco.ios.ios_command:
+        commands:
+          - show vlan brief
+      register: vlan_output
+      when: ansible_network_os is defined and 'switch' in inventory_hostname.lower()
+
+    - name: Guardar output de VLANs
+      ansible.builtin.copy:
+        content: |
+          ===== {{ inventory_hostname }} - SHOW VLAN BRIEF =====
+          {{ vlan_output.stdout[0] | default('No disponible') }}
+        dest: "{{ backup_dir }}/{{ inventory_hostname }}_vlan_brief.txt"
+      when: vlan_output is defined and vlan_output.stdout is defined
+
+    - name: Obtener show running-config
+      cisco.ios.ios_command:
+        commands:
+          - show running-config
+      register: running_config
+      when: ansible_network_os is defined
+
+    - name: Guardar running-config completo
+      ansible.builtin.copy:
+        content: "{{ running_config.stdout[0] }}"
+        dest: "{{ backup_dir }}/{{ inventory_hostname }}_full_config.txt"
+      when: running_config is defined and running_config.stdout is defined
+
+    - name: Mensaje de respaldo completado
+      ansible.builtin.debug:
+        msg: "Respaldo de {{ inventory_hostname }} guardado en {{ backup_dir }}/"

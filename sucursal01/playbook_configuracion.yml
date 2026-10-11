@@ -1,0 +1,107 @@
+---
+# Playbook principal - Configurar toda la sucursal
+- name: Configurar Router R-SUC-01
+  hosts: R-SUC-01
+  gather_facts: no
+  vars_files:
+    - vars/config_sucursal.yaml
+
+  tasks:
+    - name: Configurar subinterfaces para VLANs
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet0/0.10
+            description: Subinterface VLAN 10 - USUARIOS
+            encapsulation:
+              dot1q:
+                vlan_id: 10
+            ipv4:
+              address: 192.168.10.1 255.255.255.0
+          - name: GigabitEthernet0/0.20
+            description: Subinterface VLAN 20 - USUARIOS
+            encapsulation:
+              dot1q:
+                vlan_id: 20
+            ipv4:
+              address: 192.168.20.1 255.255.255.0
+          - name: GigabitEthernet0/0.99
+            description: Subinterface VLAN 99 - GESTION (Nativa)
+            encapsulation:
+              dot1q:
+                vlan_id: 99
+                native: true
+            ipv4:
+              address: 192.168.99.1 255.255.255.0
+      when: ansible_network_os is defined
+
+    - name: Habilitar interfaz fisica
+      cisco.ios.ios_config:
+        lines:
+          - interface GigabitEthernet0/0
+          - no shutdown
+          - description Enlace troncal hacia SW-SUC-01-CORE
+      when: ansible_network_os is defined
+
+    - name: Guardar configuración
+      cisco.ios.ios_config:
+        save_when: always
+      when: ansible_network_os is defined
+
+- name: Configurar Switches
+  hosts: switches_cisco
+  gather_facts: no
+  vars_files:
+    - vars/config_sucursal.yaml
+
+  tasks:
+    - name: Crear VLANs
+      cisco.ios.ios_vlans:
+        config:
+          - vlan_id: "{{ item.id }}"
+            name: "{{ item.name }}"
+      loop: "{{ vlans }}"
+      when: ansible_network_os is defined
+
+    - name: Configurar puertos troncales
+      cisco.ios.ios_interfaces:
+        config:
+          - name: "{{ item.key }}"
+            description: "{{ item.value.descripcion }}"
+            mode: trunk
+            trunk:
+              allowed_vlans: "{{ item.value.permitidas | join(',') }}"
+              native_vlan: "{{ item.value.nativa }}"
+      loop: "{{ (trunks[inventory_hostname] | dict2items) if (trunks[inventory_hostname] is defined) else [] }}"
+      when: ansible_network_os is defined
+
+    - name: Configurar puertos de acceso
+      cisco.ios.ios_interfaces:
+        config:
+          - name: "{{ item.key }}"
+            description: "{{ item.value.descripcion }}"
+            mode: access
+            access:
+              vlan: "{{ item.value.vlan }}"
+      loop: "{{ (acceso[inventory_hostname] | dict2items) if (acceso[inventory_hostname] is defined) else [] }}"
+      when: ansible_network_os is defined
+
+    - name: Configurar IP de gestión (VLAN 99)
+      cisco.ios.ios_config:
+        lines:
+          - interface Vlan99
+          - ip address {{ switches[inventory_hostname].ip }} {{ switches[inventory_hostname].mask }}
+          - no shutdown
+      when: 
+        - ansible_network_os is defined
+        - inventory_hostname in switches
+
+    - name: Configurar gateway por defecto
+      cisco.ios.ios_config:
+        lines:
+          - ip default-gateway {{ gestion_gateway }}
+      when: ansible_network_os is defined
+
+    - name: Guardar configuración
+      cisco.ios.ios_config:
+        save_when: always
+      when: ansible_network_os is defined

@@ -1,0 +1,39 @@
+# AUTOMATIZACIÓN Y AUDITORÍA DE SUCURSAL 01
+
+## Informe de Cumplimiento
+
+### Resumen General
+- **Elementos auditados:** 48
+- **Cumplidos:** 48
+- **Fallidos:** 0
+- **Porcentaje de cumplimiento:** 100.0%
+
+### Configuración Implementada
+
+#### VLANs
+| VLAN | Nombre | Red | Gateway |
+|------|--------|-----|---------|
+| 10   | USUARIOS_VLAN10 | 192.168.10.0/24 | 192.168.10.1 |
+| 20   | USUARIOS_VLAN20 | 192.168.20.0/24 | 192.168.20.1 |
+| 99   | GESTION | 192.168.99.0/24 | 192.168.99.1 |
+
+#### Dispositivos
+- **R-SUC-01** (Router): Configurado con subinterfaces para VLANs 10, 20 y 99
+- **SW-SUC-01-CORE** (Switch Core): VLANs 10, 20, 99 con troncales
+- **SW-SUC-01-ACC1** (Switch Acceso): VLANs 10, 20, 99 con puertos de acceso
+
+### Evidencias Generadas
+- `backups/R-SUC-01_full_config.txt`
+- `backups/SW-SUC-01-CORE_full_config.txt`
+- `backups/SW-SUC-01-CORE_vlan_brief.txt`
+- `backups/SW-SUC-01-ACC1_full_config.txt`
+- `backups/SW-SUC-01-ACC1_vlan_brief.txt`
+
+### Comandos de Verificación
+```bash
+cd C:\Users\vlope\OneDrive\Desktop\pruebas\sucursal01
+python auditoria.py
+```
+
+### Resultado Final
+✅ **100% de cumplimiento del diseño especificado**

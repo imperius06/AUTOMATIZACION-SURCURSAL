@@ -1,0 +1,6 @@
+VLAN Name                            Status    Ports
+---- -------------------------------- --------- -----------------------------
+1    DEFAULT                         active    
+10   USUARIOS_VLAN10                 active    Gi0/1, Gi0/2
+20   USUARIOS_VLAN20                 active    Gi1/0, Gi1/1
+99   GESTION                         active    Gi0/3

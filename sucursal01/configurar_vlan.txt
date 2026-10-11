@@ -1,0 +1,204 @@
+=============================================================================
+CONFIGURACIÓN VLANs - SUCURSAL 01
+=============================================================================
+Copiar y pegar estos comandos en cada dispositivo por consola (telnet).
+
+=============================================================================
+SW-SUC-01-CORE (puerto 5009)
+=============================================================================
+enable
+configure terminal
+
+! Crear VLANs 10, 20, 99
+vlan 10
+ name USUARIOS_VLAN10
+exit
+vlan 20
+ name USUARIOS_VLAN20
+exit
+vlan 99
+ name GESTION
+exit
+
+! Configurar troncal hacia R-SUC-01 (Gi0/0)
+interface GigabitEthernet0/0
+ description Troncal hacia R-SUC-01
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,99
+ switchport mode trunk
+ no shutdown
+exit
+
+! Configurar troncal hacia SW-SUC-01-ACC1 (Gi1/2)
+interface GigabitEthernet1/2
+ description Troncal hacia SW-SUC-01-ACC1
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,99
+ switchport mode trunk
+ no shutdown
+exit
+
+! Configurar puertos de acceso VLAN 10
+interface GigabitEthernet0/1
+ description PC1 - VLAN 10
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+exit
+interface GigabitEthernet0/2
+ description PC2 - VLAN 10
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+exit
+
+! Configurar puertos de acceso VLAN 20
+interface GigabitEthernet1/0
+ description PC3 - VLAN 20
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+interface GigabitEthernet1/1
+ description PC4 - VLAN 20
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+
+! Configurar puerto de gestión VLAN 99
+interface GigabitEthernet0/3
+ description Gestion - VLAN 99
+ switchport mode access
+ switchport access vlan 99
+ no shutdown
+exit
+
+! Configurar IP de gestión
+interface Vlan99
+ ip address 192.168.99.2 255.255.255.0
+ no shutdown
+exit
+
+! Gateway por defecto
+ip default-gateway 192.168.99.1
+
+! Guardar configuración
+end
+write memory
+show vlan brief
+show running-config
+
+=============================================================================
+SW-SUC-01-ACC1 (puerto 5013)
+=============================================================================
+enable
+configure terminal
+
+! Crear VLANs 10, 20, 99
+vlan 10
+ name USUARIOS_VLAN10
+exit
+vlan 20
+ name USUARIOS_VLAN20
+exit
+vlan 99
+ name GESTION
+exit
+
+! Configurar troncal hacia SW-SUC-01-CORE (Gi0/0)
+interface GigabitEthernet0/0
+ description Troncal hacia SW-SUC-01-CORE
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20,99
+ switchport mode trunk
+ no shutdown
+exit
+
+! Configurar puertos de acceso
+interface GigabitEthernet0/1
+ description PC5 - VLAN 10
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+exit
+interface GigabitEthernet0/2
+ description PC6 - VLAN 20
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+interface GigabitEthernet0/3
+ description PC8 - VLAN 99
+ switchport mode access
+ switchport access vlan 99
+ no shutdown
+exit
+
+! Configurar IP de gestión
+interface Vlan99
+ ip address 192.168.99.3 255.255.255.0
+ no shutdown
+exit
+
+! Gateway por defecto
+ip default-gateway 192.168.99.1
+
+! Guardar configuración
+end
+write memory
+show vlan brief
+show running-config
+
+=============================================================================
+R-SUC-01 (puerto 5003) - Router con subinterfaces
+=============================================================================
+enable
+configure terminal
+
+! Configurar interfaz física
+interface GigabitEthernet0/0
+ description Enlace troncal hacia SW-SUC-01-CORE
+ no shutdown
+exit
+
+! Subinterface VLAN 10
+interface GigabitEthernet0/0.10
+ description Subinterface VLAN 10 - USUARIOS
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+exit
+
+! Subinterface VLAN 20
+interface GigabitEthernet0/0.20
+ description Subinterface VLAN 20 - USUARIOS
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+exit
+
+! Subinterface VLAN 99 (Nativa)
+interface GigabitEthernet0/0.99
+ description Subinterface VLAN 99 - GESTION
+ encapsulation dot1Q 99 native
+ ip address 192.168.99.1 255.255.255.0
+exit
+
+! Guardar configuración
+end
+write memory
+show ip interface brief
+show running-config
+
+=============================================================================
+VERIFICACIÓN FINAL
+=============================================================================
+! En cada switch:
+show vlan brief
+show interfaces trunk
+show running-config | include vlan|Vlan
+
+! En el router:
+show ip interface brief
+show running-config | include interface|encapsulation|ip address
+
+=============================================================================
